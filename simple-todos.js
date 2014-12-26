@@ -3,35 +3,35 @@ Units = new Mongo.Collection ("units");
 if (Meteor.isClient) {
   var which = 0;
   var mouseenter = function () {
-      $(this).addClass ('checked');
-console.info ( $(this));
+if (which == 1 || which == 3)
+        Units.update (this._id, {$set: {checked: which == 3 ? false : true}});
 
   }
   Template.body.events({
     "contextmenu .unit": function (e) {e.stopPropagation();return false;},
     "mousedown .unit": function (e) {
 
-console.info ('mousedown' + e.which);
 
       which = e.which;
-      return;
+      mouseenter.bind (this).apply ();
+//console.info (e.which);
 
       // Tasks.update (this._id, {$set: {checked: ! this.checked}});
     },
-    "mouseup .unit": function () {
+    "mouseup .unit": function (e) {
       which = 0;
+
+console.error (e.which);
       // Tasks.remove(this._id);
     },
     "click .unit": function () {
 
       // Tasks.remove(this._id);
     },
-    "mouseenter .unit": function () {
-console.info ('mouseenter' + which);
-
-      Units.update (this._id, {$set: {checked: which == 3 ? false : true}});
-
-      // Tasks.remove(this._id);
+    "mousemove .unit": function () {
+      mouseenter.bind (this).apply ();
+      // mouseenter
+      // if (which == 1 || which == 3)
     }
   });
 
