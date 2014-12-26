@@ -1,24 +1,49 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault("counter", 0);
+Units = new Mongo.Collection ("units");
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get("counter");
+if (Meteor.isClient) {
+  var which = 0;
+  var mouseenter = function () {
+      $(this).addClass ('checked');
+console.info ( $(this));
+
+  }
+  Template.body.events({
+    "contextmenu .unit": function (e) {e.stopPropagation();return false;},
+    "mousedown .unit": function (e) {
+
+console.info ('mousedown' + e.which);
+
+      which = e.which;
+      return;
+
+      // Tasks.update (this._id, {$set: {checked: ! this.checked}});
+    },
+    "mouseup .unit": function () {
+      which = 0;
+      // Tasks.remove(this._id);
+    },
+    "click .unit": function () {
+
+      // Tasks.remove(this._id);
+    },
+    "mouseenter .unit": function () {
+console.info ('mouseenter' + which);
+
+      Units.update (this._id, {$set: {checked: which == 3 ? false : true}});
+
+      // Tasks.remove(this._id);
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set("counter", Session.get("counter") + 1);
+  Template.body.helpers({
+    units: function () {
+      return Units.find ({}, {});
     }
   });
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-console.info ('12');
 
     // code to run on server at startup
   });

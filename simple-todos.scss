@@ -1,0 +1,85 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2014 OA Wu Design
+ */
+
+
+@import "_oa";
+@include font-face(Monaco, font-files("monaco/monaco.ttf", "monaco/monaco.otf"));
+
+* {
+  vertical-align: top;
+  @include font-smoothing(antialiased);
+
+  &, &:after, &:before {
+    @include box-sizing(border-box);
+  }
+}
+
+*.clearfix {
+  *zoom: 1;
+
+  &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+    clear: both;
+  }
+}
+
+html {
+  height: 100%;
+
+  body {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-size: medium;
+    font-family: Monaco;
+    background: $mainBackgroundColor $mainBackgroundImage;
+    color: rgba(50, 50, 50, 0.7);
+
+    @include font-smoothing(antialiased);
+    @include box-shadow(none);
+
+    &:before {
+      content: "";
+      position: fixed;
+      top: -10px;
+      left: 0;
+      width: 100%;
+      height: 10px;
+      z-index: 100;
+    }
+
+    #container {
+      position: relative;
+      display: inline-block;
+      margin: $mainTop auto $mainBottom auto;
+      text-align: left;
+      width: 960px;
+
+      .unit {
+        position: relative;
+        display: inline-block;
+        float: left;
+
+        width: 20px;
+        height: 20px;
+        border: 1px solid rgba(255, 0, 0, .3);
+        -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+        user-drag: none;
+
+        -webkit-user-select: none; /* Not valid CSS yet, as of July 2012 */
+        user-select: none; /* Not valid CSS yet, as of July 2012 */
+
+        &.checked {
+          background-color: rgba(0, 0, 255, 0.2);
+        }
+      }
+    }
+  }
+}
