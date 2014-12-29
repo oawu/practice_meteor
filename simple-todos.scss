@@ -56,20 +56,20 @@ html {
     }
 
     #container {
+      border: 1px solid rgba(255, 0, 0, .3);
       position: relative;
       display: inline-block;
       margin: $mainTop auto $mainBottom auto;
       text-align: left;
-      width: 960px;
+      width: 962px;
 
       .unit {
         position: relative;
         display: inline-block;
         float: left;
-
-        width: 20px;
-        height: 20px;
-        border: 1px solid rgba(255, 0, 0, .3);
+border: 1px solid rgba(255, 0, 0, .1);
+        width: 10px;
+        height: 10px;
         -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
         user-drag: none;
 

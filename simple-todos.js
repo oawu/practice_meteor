@@ -2,7 +2,9 @@ Units = new Mongo.Collection ("units");
 
 if (Meteor.isClient) {
   var which = 0;
+
   var mouseenter = function () {
+
 if (which == 1 || which == 3)
         Units.update (this._id, {$set: {checked: which == 3 ? false : true}});
 
@@ -45,6 +47,8 @@ console.error (e.which);
 if (Meteor.isServer) {
   Meteor.startup(function () {
 
+  // for (var i = 0; i< 5760; i++)
+  //     Units.insert({ checked: false });
     // code to run on server at startup
   });
 }
