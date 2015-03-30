@@ -1,54 +1,59 @@
-Units = new Mongo.Collection ("units");
+Tasks = new Mongo.Collection("tasks");
 
 if (Meteor.isClient) {
-  var which = 0;
-
-  var mouseenter = function () {
-
-if (which == 1 || which == 3)
-        Units.update (this._id, {$set: {checked: which == 3 ? false : true}});
-
-  }
-  Template.body.events({
-    "contextmenu .unit": function (e) {e.stopPropagation();return false;},
-    "mousedown .unit": function (e) {
-
-
-      which = e.which;
-      mouseenter.bind (this).apply ();
-//console.info (e.which);
-
-      // Tasks.update (this._id, {$set: {checked: ! this.checked}});
-    },
-    "mouseup .unit": function (e) {
-      which = 0;
-
-console.error (e.which);
-      // Tasks.remove(this._id);
-    },
-    "click .unit": function () {
-
-      // Tasks.remove(this._id);
-    },
-    "mousemove .unit": function () {
-      mouseenter.bind (this).apply ();
-      // mouseenter
-      // if (which == 1 || which == 3)
-    }
-  });
-
+  // This code only runs on the client
   Template.body.helpers({
-    units: function () {
-      return Units.find ({}, {});
+    tasks: function () {
+      if (Session.get("hideCompleted")) {
+        // If hide completed is checked, filter tasks
+        return Tasks.find({checked: {$ne: true}}, {sort: {createdAt: -1}});
+      } else {
+        // Otherwise, return all of the tasks
+        return Tasks.find({}, {sort: {createdAt: -1}});
+      }
+    },
+    hideCompleted: function () {
+      return Session.get("hideCompleted");
+    },
+    incompleteCount: function () {
+      return Tasks.find({checked: {$ne: true}}).count();
     }
   });
-}
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
+  Template.body.events({
+    "submit .new-task": function (event) {
+      // This function is called when the new task form is submitted
+      var text = event.target.text.value;
 
-  // for (var i = 0; i< 5760; i++)
-  //     Units.insert({ checked: false });
-    // code to run on server at startup
+      Tasks.insert({
+        text: text,
+        createdAt: new Date(),            // current time
+        owner: Meteor.userId(),           // _id of logged in user
+        username: Meteor.user().username  // username of logged in user
+      });
+
+      // Clear form
+      event.target.text.value = "";
+
+      // Prevent default form submit
+      return false;
+    },
+    "change .hide-completed input": function (event) {
+      Session.set("hideCompleted", event.target.checked);
+    }
+  });
+
+  Template.task.events({
+    "click .toggle-checked": function () {
+      // Set the checked property to the opposite of its current value
+      Tasks.update(this._id, {$set: {checked: ! this.checked}});
+    },
+    "click .delete": function () {
+      Tasks.remove(this._id);
+    }
+  });
+
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
   });
 }
