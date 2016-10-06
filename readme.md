@@ -1,7 +1,7 @@
 #Meteor Note
 貌似很強的 Node Framework！
 
-* [官網](https://www.meteor.com/) - https://www.meteor.com/install
+* [官網](https://www.meteor.com/) - https://www.meteor.com/
 * [安裝](https://www.meteor.com/install) - https://www.meteor.com/install
 
 
