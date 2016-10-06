@@ -13,7 +13,8 @@
 
 ##起始專案
 * 新增專案 `meteor create app_name`，app_name 為專案名稱
-* 進去專案後，執行 `meteor`
+* 進去專案後，執行 `meteor` 後就是啟動 Server
+![](img/02.png)
 
 
 
