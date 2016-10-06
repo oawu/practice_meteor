@@ -5,6 +5,11 @@
 * [安裝](https://www.meteor.com/install) - https://www.meteor.com/install
 
 
+##安裝
+基本上就是看官網照著走
+
+* OSX / LINUX 系統 - 終端機 `curl https://install.meteor.com/ | sh`
+* Windows - [下載吧！](https://s3.amazonaws.com/meteor-windows/InstallMeteor.exe)
 
 ##起始專案
 * 新增專案 `meteor create app_name`，app_name 為專案名稱
